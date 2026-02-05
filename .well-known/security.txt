@@ -4,7 +4,6 @@
 
 # Contact for security researchers
 Contact: https://github.com/kmay89/ERRERLabs/security/advisories/new
-Contact: https://github.com/kmay89
 
 # Expiration date (update annually)
 Expires: 2027-02-05T00:00:00.000Z
