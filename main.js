@@ -45,34 +45,59 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // Recalculate scroll height on resize (debounced)
+// Also close mobile nav when resizing to desktop
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
     cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    // Close mobile nav if window is resized to desktop width
+    if (window.innerWidth > 768) {
+      closeMobileNav();
+    }
   }, 150);
 }, { passive: true });
 
 // Initial call on load
 window.addEventListener('load', updateScroll);
 
-// Hamburger menu toggle
-hamburger.addEventListener('click', () => {
+// Close mobile nav helper function
+function closeMobileNav() {
+  hamburger.classList.remove('active');
+  mobileNav.classList.remove('active');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+// Toggle mobile nav helper function
+function toggleMobileNav(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
   const isActive = hamburger.classList.toggle('active');
   mobileNav.classList.toggle('active');
   hamburger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-
-  // Prevent body scroll when menu is open
   document.body.style.overflow = isActive ? 'hidden' : '';
-});
+}
+
+// Hamburger menu toggle - handle both click and touch
+hamburger.addEventListener('click', toggleMobileNav);
+hamburger.addEventListener('touchend', function(e) {
+  // Prevent double-firing on devices that trigger both touch and click
+  e.preventDefault();
+  toggleMobileNav(e);
+}, { passive: false });
 
 // Close mobile menu when a link is clicked
 document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    mobileNav.classList.remove('active');
-    hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  });
+  link.addEventListener('click', closeMobileNav);
+});
+
+// Close mobile menu when clicking outside (on the backdrop)
+mobileNav.addEventListener('click', function(e) {
+  if (e.target === mobileNav) {
+    closeMobileNav();
+  }
 });
 
 // Smooth scroll for anchor links (both desktop and mobile)

@@ -898,7 +898,50 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
     .reveal-delay-5 { transition-delay: 0.5s; }
-    
+
+    /* Stack section */
+    .stack-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+    .stack-item {
+      padding: 20px 32px;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stack-item.philosophy {
+      background: rgba(160, 120, 255, 0.05);
+      border: 1px solid rgba(160, 120, 255, 0.15);
+    }
+    .stack-item.framework {
+      background: rgba(245, 197, 24, 0.05);
+      border: 1px solid rgba(245, 197, 24, 0.15);
+    }
+    .stack-item.implementation {
+      background: rgba(255, 125, 65, 0.05);
+      border: 1px solid rgba(255, 125, 65, 0.15);
+    }
+    .stack-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+    .stack-name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .stack-arrow {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .stack-arrow-down {
+      display: none;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .branches-grid, .mech-grid, .audience-grid { grid-template-columns: 1fr; }
@@ -916,6 +959,24 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .mobile-nav { display: flex; }
+
+      /* Stack vertical on mobile */
+      .stack-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .stack-item {
+        width: 100%;
+        max-width: 280px;
+      }
+      .stack-arrow {
+        display: none;
+      }
+      .stack-arrow-down {
+        display: block;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.15);
+      }
     }
     @media (max-width: 600px) {
       nav { padding: 14px 16px; }
@@ -1060,7 +1121,7 @@
       <div class="reveal">
         <p class="section-label">WHY IT MATTERS</p>
         <h2>The problem with<br>"we can turn it off"</h2>
-        <p class="tagline">Features that exist can be exploited. Settings can be changed. Promises can be broken. The strongest assurance is absence.</p>
+        <p class="tagline">Features that exist can be exploited. Settings can be changed. Promises can be broken. Absence offers a different kind of assurance.</p>
       </div>
       
       <table class="comparison-table reveal reveal-delay-1">
@@ -1075,17 +1136,17 @@
           <tr>
             <td>Facial recognition</td>
             <td><span class="icon-bad">●</span> Disabled by default, can be enabled</td>
-            <td><span class="icon-good">●</span> Code doesn't exist</td>
+            <td><span class="icon-good">●</span> Not included in codebase</td>
           </tr>
           <tr>
             <td>Location tracking</td>
             <td><span class="icon-bad">●</span> User can opt out</td>
-            <td><span class="icon-good">●</span> No GPS integration written</td>
+            <td><span class="icon-good">●</span> GPS integration not included</td>
           </tr>
           <tr>
             <td>Behavioral profiling</td>
             <td><span class="icon-bad">●</span> Anonymized and aggregated</td>
-            <td><span class="icon-good">●</span> No analytics collected</td>
+            <td><span class="icon-good">●</span> Analytics not implemented</td>
           </tr>
           <tr>
             <td>Video storage</td>
@@ -1108,7 +1169,7 @@
       <div class="glass-panel reveal reveal-delay-2" style="margin-top: 48px; text-align: center;">
         <p style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 1.6;">
           <span class="highlight-red">Disabled</span> means it can be <em>enabled</em>.<br>
-          <span class="highlight-green">Absent</span> means it <em>can't</em>.
+          <span class="highlight-green">Absent</span> means there's nothing to enable.
         </p>
       </div>
     </div>
@@ -1289,12 +1350,12 @@
       <div class="reveal">
         <p class="section-label">ECHO RESONANCE LABS</p>
         <h2>SecuraCV</h2>
-        <p class="tagline">Camera software that outputs events, not footage. "Package delivered." "Motion detected." "Person entered." No faces stored. No identities tracked. Minimal video exposure.</p>
+        <p class="tagline">Camera software designed to output events, not footage. "Package delivered." "Motion detected." "Person entered." Built without face storage or identity tracking. Minimal video exposure by design.</p>
       </div>
       
       <div class="glass-panel reveal reveal-delay-1" style="margin-top: 48px;">
         <p style="font-size: 17px; color: rgba(255, 255, 255, 0.75); line-height: 1.7;">
-          <strong style="color: #fff;">Privacy by absence.</strong> We didn't disable facial recognition. We never wrote it. The code to violate your privacy doesn't exist in our repository. Audit it yourself.
+          <strong style="color: #fff;">Privacy by absence.</strong> We didn't disable facial recognition — we never wrote it. Biometric identification code is not included in this repository. Audit it yourself.
         </p>
       </div>
       
@@ -1303,11 +1364,11 @@
         <div class="feature-list">
           <div class="feature-item">
             <p class="feature-title highlight-orange">Output is text, not video</p>
-            <p class="feature-desc">The system tells you what happened in words. There's no API to stream footage, no endpoint to download clips. The capability doesn't exist.</p>
+            <p class="feature-desc">The system tells you what happened in words. By design, there's no API to stream footage and no endpoint to download clips in the base implementation.</p>
           </div>
           <div class="feature-item">
             <p class="feature-title highlight-orange">Biometrics were never coded</p>
-            <p class="feature-desc">Facial recognition, license plate readers, gait analysis — these aren't turned off. The functions were never written. You can't enable what doesn't exist.</p>
+            <p class="feature-desc">Facial recognition, license plate readers, gait analysis — these aren't disabled, they're absent. The functions are not included in the codebase.</p>
           </div>
           <div class="feature-item">
             <p class="feature-title highlight-orange">Requires consensus for raw access</p>
@@ -1321,7 +1382,7 @@
         <div class="mech-grid">
           <div class="mech-item">
             <p class="mech-title">Pixels stay private</p>
-            <p class="mech-desc">Raw image data never leaves the device</p>
+            <p class="mech-desc">Raw image data processed locally by default</p>
           </div>
           <div class="mech-item">
             <p class="mech-title">Multi-party export</p>
@@ -1419,24 +1480,26 @@
       </div>
       
       <div class="reveal reveal-delay-4" style="margin-top: 64px;">
-        <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255, 255, 255, 0.3); letter-spacing: 0.15em; text-align: center; margin-bottom: 32px;">THE STACK</p>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap;">
-          <div style="padding: 20px 32px; background: rgba(160, 120, 255, 0.05); border: 1px solid rgba(160, 120, 255, 0.15); border-radius: 12px; text-align: center; min-width: 140px;">
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(160, 120, 255, 0.7); letter-spacing: 0.15em; margin-bottom: 8px;">PHILOSOPHY</p>
-            <p style="font-size: 18px; color: #a078ff; font-weight: 600;">CIVICA</p>
+        <p class="section-label" style="justify-content: center; margin-bottom: 32px;">THE STACK</p>
+        <div class="stack-container">
+          <div class="stack-item philosophy">
+            <p class="stack-label" style="color: rgba(160, 120, 255, 0.7);">PHILOSOPHY</p>
+            <p class="stack-name" style="color: #a078ff;">CIVICA</p>
           </div>
-          <div style="font-size: 20px; color: rgba(255, 255, 255, 0.15);">→</div>
-          <div style="padding: 20px 32px; background: rgba(245, 197, 24, 0.05); border: 1px solid rgba(245, 197, 24, 0.15); border-radius: 12px; text-align: center; min-width: 140px;">
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(245, 197, 24, 0.7); letter-spacing: 0.15em; margin-bottom: 8px;">FRAMEWORK</p>
-            <p style="font-size: 18px; color: #f5c518; font-weight: 600;">SCQCS</p>
+          <span class="stack-arrow">→</span>
+          <span class="stack-arrow-down">↓</span>
+          <div class="stack-item framework">
+            <p class="stack-label" style="color: rgba(245, 197, 24, 0.7);">FRAMEWORK</p>
+            <p class="stack-name" style="color: #f5c518;">SCQCS</p>
           </div>
-          <div style="font-size: 20px; color: rgba(255, 255, 255, 0.15);">→</div>
-          <div style="padding: 20px 32px; background: rgba(255, 125, 65, 0.05); border: 1px solid rgba(255, 125, 65, 0.15); border-radius: 12px; text-align: center; min-width: 140px;">
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255, 125, 65, 0.7); letter-spacing: 0.15em; margin-bottom: 8px;">IMPLEMENTATION</p>
-            <p style="font-size: 18px; color: #ff7d41; font-weight: 600;">SecuraCV</p>
+          <span class="stack-arrow">→</span>
+          <span class="stack-arrow-down">↓</span>
+          <div class="stack-item implementation">
+            <p class="stack-label" style="color: rgba(255, 125, 65, 0.7);">IMPLEMENTATION</p>
+            <p class="stack-name" style="color: #ff7d41;">SecuraCV</p>
           </div>
         </div>
-        <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255, 255, 255, 0.25); text-align: center; margin-top: 28px;">Principles → Architecture → Code</p>
+        <p class="mono" style="font-size: 12px; color: rgba(255, 255, 255, 0.25); text-align: center; margin-top: 28px;">Principles → Architecture → Code</p>
       </div>
     </div>
   </section>
