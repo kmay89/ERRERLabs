@@ -130,7 +130,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % words.length;
-        rotatingWord.innerHTML = `<span class="word">${words[currentIndex]}</span>`;
+        rotatingWord.innerHTML = `<span class="word enter">${words[currentIndex]}</span>`;
       }, 400); // Match exit animation duration
     }
   }
