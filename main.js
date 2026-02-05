@@ -114,71 +114,51 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Typewriter text animation for hero - GPU optimized, mobile-friendly
-(function initTypewriter() {
-  const words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
-  const rotatingWord = document.getElementById('rotating-word');
+// Typewriter text animation for hero
+window.addEventListener('load', function() {
+  var words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
+  var el = document.getElementById('rotating-word');
+  if (!el) return;
 
-  // Wait for DOM if element not found
-  if (!rotatingWord) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initTypewriter);
+  var wordIndex = 0;
+  var charIndex = el.textContent.length;
+  var isDeleting = false;
+  var timeout;
+
+  function type() {
+    var current = words[wordIndex];
+
+    if (isDeleting) {
+      charIndex--;
+      el.textContent = current.substring(0, charIndex);
+    } else {
+      charIndex++;
+      el.textContent = current.substring(0, charIndex);
     }
-    return;
+
+    var delay = isDeleting ? 50 : 80;
+
+    if (!isDeleting && charIndex === current.length) {
+      delay = 2500;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      delay = 200;
+    }
+
+    timeout = setTimeout(type, delay);
   }
 
-  let currentIndex = 0;
-  let currentText = rotatingWord.textContent;
-  let isRunning = true;
-  let animationTimeout = null;
-
-  const deleteSpeed = 45;   // ms per character delete
-  const typeSpeed = 70;     // ms per character type
-  const pauseBetween = 2800; // pause before starting to delete
-
-  // Pause animation when tab is not visible (saves battery on mobile)
-  document.addEventListener('visibilitychange', () => {
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
-      isRunning = false;
-      if (animationTimeout) clearTimeout(animationTimeout);
+      clearTimeout(timeout);
     } else {
-      isRunning = true;
-      animationTimeout = setTimeout(cycleWord, 500);
+      timeout = setTimeout(type, 500);
     }
   });
 
-  function updateText(text) {
-    currentText = text;
-    rotatingWord.textContent = text;
-  }
-
-  function deleteChar() {
-    if (!isRunning) return;
-    if (currentText.length === 0) {
-      currentIndex = (currentIndex + 1) % words.length;
-      animationTimeout = setTimeout(typeChar, 150);
-      return;
-    }
-    updateText(currentText.slice(0, -1));
-    animationTimeout = setTimeout(deleteChar, deleteSpeed);
-  }
-
-  function typeChar() {
-    if (!isRunning) return;
-    const targetWord = words[currentIndex];
-    if (currentText.length >= targetWord.length) {
-      animationTimeout = setTimeout(cycleWord, pauseBetween);
-      return;
-    }
-    updateText(currentText + targetWord[currentText.length]);
-    animationTimeout = setTimeout(typeChar, typeSpeed);
-  }
-
-  function cycleWord() {
-    if (!isRunning) return;
-    animationTimeout = setTimeout(deleteChar, 0);
-  }
-
-  // Start after initial pause
-  animationTimeout = setTimeout(cycleWord, pauseBetween);
-})();
+  // Start after 2.5s
+  timeout = setTimeout(type, 2500);
+});
