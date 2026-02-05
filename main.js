@@ -114,29 +114,45 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Rotating text animation for hero
+// Typewriter text animation for hero
 (function() {
   const words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
   const rotatingWord = document.getElementById('rotating-word');
   if (!rotatingWord) return;
 
   let currentIndex = 0;
-  const interval = 2500; // Time between word changes
+  const deleteSpeed = 50;  // ms per character delete
+  const typeSpeed = 80;    // ms per character type
+  const pauseBetween = 2500; // pause before starting to delete
 
-  function rotateWord() {
-    const currentSpan = rotatingWord.querySelector('.word');
-    if (currentSpan) {
-      currentSpan.classList.add('exit');
-
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % words.length;
-        rotatingWord.innerHTML = `<span class="word enter">${words[currentIndex]}</span>`;
-      }, 400); // Match exit animation duration
+  function deleteText(callback) {
+    const currentText = rotatingWord.textContent;
+    if (currentText.length === 0) {
+      callback();
+      return;
     }
+    rotatingWord.textContent = currentText.slice(0, -1);
+    setTimeout(() => deleteText(callback), deleteSpeed);
   }
 
-  // Start rotation after initial delay
-  setTimeout(() => {
-    setInterval(rotateWord, interval);
-  }, 2000);
+  function typeText(text, index, callback) {
+    if (index >= text.length) {
+      callback();
+      return;
+    }
+    rotatingWord.textContent += text[index];
+    setTimeout(() => typeText(text, index + 1, callback), typeSpeed);
+  }
+
+  function cycleWord() {
+    deleteText(() => {
+      currentIndex = (currentIndex + 1) % words.length;
+      typeText(words[currentIndex], 0, () => {
+        setTimeout(cycleWord, pauseBetween);
+      });
+    });
+  }
+
+  // Start the cycle after initial display
+  setTimeout(cycleWord, pauseBetween);
 })();
