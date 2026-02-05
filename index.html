@@ -463,9 +463,10 @@
 
     /* Typewriter text animation - GPU optimized */
     .rotating-text-container {
-      display: inline;
+      display: inline-block;
       position: relative;
-      contain: layout style;
+      min-width: 5.5em; /* Fixed width to prevent "that passes" from shifting */
+      text-align: left;
     }
     .rotating-word {
       display: inline;
@@ -476,7 +477,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: gradientShift 8s ease-in-out infinite;
-      will-change: contents;
     }
     .typewriter-cursor {
       display: inline-block;
