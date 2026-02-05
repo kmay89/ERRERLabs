@@ -113,3 +113,55 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Typewriter text animation for hero
+window.addEventListener('load', function() {
+  var words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
+  var el = document.getElementById('rotating-word');
+  if (!el) return;
+
+  var wordIndex = 0;
+  var charIndex = words[0].length;
+  var isDeleting = true; // Start by deleting the first word
+  var timeout;
+
+  function type() {
+    var current = words[wordIndex];
+    var delay;
+
+    if (isDeleting) {
+      charIndex--;
+      el.textContent = current.substring(0, charIndex);
+      delay = 50;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        delay = 200;
+      }
+    } else {
+      charIndex++;
+      el.textContent = words[wordIndex].substring(0, charIndex);
+      delay = 80;
+
+      if (charIndex === words[wordIndex].length) {
+        isDeleting = true;
+        delay = 2500;
+      }
+    }
+
+    timeout = setTimeout(type, delay);
+  }
+
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      clearTimeout(timeout);
+    } else {
+      timeout = setTimeout(type, 500);
+    }
+  });
+
+  // Start deleting after 2.5s pause
+  timeout = setTimeout(type, 2500);
+});

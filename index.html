@@ -460,6 +460,43 @@
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(8px); }
     }
+
+    /* Typewriter text animation - GPU optimized */
+    .rotating-text-container {
+      display: inline;
+      position: relative;
+      contain: layout style;
+    }
+    .rotating-word {
+      display: inline;
+      position: relative;
+      background: linear-gradient(135deg, #ff7d41 0%, #f5c518 50%, #50c878 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 8s ease-in-out infinite;
+      will-change: contents;
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;
+      background: linear-gradient(135deg, #ff7d41, #f5c518);
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      border-radius: 1px;
+      animation: cursorBlink 1s steps(1) infinite;
+      will-change: opacity;
+    }
+    @keyframes cursorBlink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
     
     /* Stats row */
     .stats-row {
@@ -1041,7 +1078,7 @@
           ERRERlabs
         </p>
       </div>
-      <h1 class="reveal reveal-delay-1">Software that passes<br>the ethics check.</h1>
+      <h1 class="reveal reveal-delay-1"><span class="rotating-text-container"><span class="rotating-word" id="rotating-word">Architecture</span><span class="typewriter-cursor"></span></span> that passes<br>the ethics check.</h1>
       <p class="tagline reveal reveal-delay-2">The safest capabilities are the ones that don't exist. We publish research and build tools designed to reduce harm by reducing what's possible.</p>
       <p class="subtext reveal reveal-delay-3">Privacy policies are promises. Architecture is evidence. If a capability creates liability, the safest move is to never write it.</p>
       
@@ -1059,11 +1096,15 @@
       <div class="stats-row reveal reveal-delay-5">
         <div class="stat">
           <div class="stat-value">0</div>
-          <div class="stat-label">biometric functions</div>
+          <div class="stat-label">biometric storage</div>
         </div>
         <div class="stat">
           <div class="stat-value">0</div>
-          <div class="stat-label">facial recognition APIs</div>
+          <div class="stat-label">GPS integrations</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">0</div>
+          <div class="stat-label">raw bytes exposed</div>
         </div>
         <div class="stat">
           <div class="stat-value">100%</div>
