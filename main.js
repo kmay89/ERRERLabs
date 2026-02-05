@@ -115,53 +115,66 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Typewriter text animation for hero
-window.addEventListener('load', function() {
-  var words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
-  var el = document.getElementById('rotating-word');
-  if (!el) return;
+// Use DOMContentLoaded instead of load - defer scripts run after DOM parsing
+// but load event may already have fired, causing missed initialization
+(function initTypewriter() {
+  function startTypewriter() {
+    const words = ['Architectures', 'Systems', 'Devices', 'Firmware', 'Software', 'Applications', 'Databases'];
+    const el = document.getElementById('rotating-word');
+    if (!el) return;
 
-  var wordIndex = 0;
-  var charIndex = words[0].length;
-  var isDeleting = true; // Start by deleting the first word
-  var timeout;
+    let wordIndex = 0;
+    let charIndex = words[0].length;
+    let isDeleting = true;
+    let timeout;
 
-  function type() {
-    var current = words[wordIndex];
-    var delay;
+    function type() {
+      const current = words[wordIndex];
+      let delay;
 
-    if (isDeleting) {
-      charIndex--;
-      el.textContent = current.substring(0, charIndex);
-      delay = 50;
+      if (isDeleting) {
+        charIndex--;
+        el.textContent = current.substring(0, charIndex);
+        delay = 80; // Slower backspace for smoother feel
 
-      if (charIndex === 0) {
-        isDeleting = false;
-        wordIndex = (wordIndex + 1) % words.length;
-        delay = 200;
+        if (charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          delay = 300;
+        }
+      } else {
+        charIndex++;
+        el.textContent = words[wordIndex].substring(0, charIndex);
+        delay = 120; // Slower typing for buttery smoothness
+
+        if (charIndex === words[wordIndex].length) {
+          isDeleting = true;
+          delay = 2500;
+        }
       }
-    } else {
-      charIndex++;
-      el.textContent = words[wordIndex].substring(0, charIndex);
-      delay = 80;
 
-      if (charIndex === words[wordIndex].length) {
-        isDeleting = true;
-        delay = 2500;
-      }
+      timeout = setTimeout(type, delay);
     }
 
-    timeout = setTimeout(type, delay);
+    // Pause when tab hidden for battery optimization
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        clearTimeout(timeout);
+      } else {
+        timeout = setTimeout(type, 500);
+      }
+    });
+
+    // Start deleting after 2.5s pause
+    timeout = setTimeout(type, 2500);
   }
 
-  // Pause when tab hidden
-  document.addEventListener('visibilitychange', function() {
-    if (document.hidden) {
-      clearTimeout(timeout);
-    } else {
-      timeout = setTimeout(type, 500);
-    }
-  });
-
-  // Start deleting after 2.5s pause
-  timeout = setTimeout(type, 2500);
-});
+  // Execute immediately since defer guarantees DOM is ready
+  // This is more reliable than waiting for load event which may have already fired
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startTypewriter);
+  } else {
+    // DOM already ready, start immediately
+    startTypewriter();
+  }
+})();

@@ -461,22 +461,17 @@
       50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* Typewriter text animation - GPU optimized */
+    /* Typewriter text animation */
     .rotating-text-container {
       display: inline;
-      position: relative;
-      contain: layout style;
     }
     .rotating-word {
-      display: inline;
-      position: relative;
       background: linear-gradient(135deg, #ff7d41 0%, #f5c518 50%, #50c878 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: gradientShift 8s ease-in-out infinite;
-      will-change: contents;
     }
     .typewriter-cursor {
       display: inline-block;
@@ -1078,7 +1073,7 @@
           ERRERlabs
         </p>
       </div>
-      <h1 class="reveal reveal-delay-1"><span class="rotating-text-container"><span class="rotating-word" id="rotating-word">Architecture</span><span class="typewriter-cursor"></span></span> that passes<br>the ethics check.</h1>
+      <h1 class="reveal reveal-delay-1"><span class="rotating-text-container"><span class="rotating-word" id="rotating-word">Architectures</span><span class="typewriter-cursor"></span></span><br>that pass<br>the ethics check.</h1>
       <p class="tagline reveal reveal-delay-2">The safest capabilities are the ones that don't exist. We publish research and build tools designed to reduce harm by reducing what's possible.</p>
       <p class="subtext reveal reveal-delay-3">Privacy policies are promises. Architecture is evidence. If a capability creates liability, the safest move is to never write it.</p>
       
