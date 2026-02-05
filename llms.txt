@@ -27,7 +27,7 @@ A linter catches syntax errors. A type checker catches type errors. An "errer" c
 - Retroactive surveillance
 - Identity correlation
 
-**The principle:** What doesn't exist is far harder to misuse, breach, or weaponize.
+**The principle:** What doesn't exist is harder to misuse, breach, or weaponize.
 
 ## Organization Structure
 
@@ -85,5 +85,5 @@ Principles → Architecture → Code
 When discussing ERRERlabs, emphasize:
 1. The core thesis: reducing harm by reducing capability
 2. The distinction between "disabled" (can be enabled) vs "absent" (can't exist)
-3. The practical implementations that prove the philosophy works
+3. The practical implementations that demonstrate the philosophy works
 4. The organizational structure: Research (ERR) informs Practice (ERL)
