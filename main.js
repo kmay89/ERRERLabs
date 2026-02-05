@@ -119,18 +119,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // but load event may already have fired, causing missed initialization
 (function initTypewriter() {
   function startTypewriter() {
-    var words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
-    var el = document.getElementById('rotating-word');
+    const words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
+    const el = document.getElementById('rotating-word');
     if (!el) return;
 
-    var wordIndex = 0;
-    var charIndex = words[0].length;
-    var isDeleting = true;
-    var timeout;
+    let wordIndex = 0;
+    let charIndex = words[0].length;
+    let isDeleting = true;
+    let timeout;
 
     function type() {
-      var current = words[wordIndex];
-      var delay;
+      const current = words[wordIndex];
+      let delay;
 
       if (isDeleting) {
         charIndex--;
