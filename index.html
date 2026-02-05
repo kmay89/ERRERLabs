@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERRERlabs - Software That Passes The Ethics Check</title>
+  <meta name="description" content="ERRERlabs reduces harm by reducing what's possible. Research and implementations for software that passes the ethics check.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #030108;
+      color: #fff;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #030108; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 125, 65, 0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 125, 65, 0.5); }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(3, 1, 8, 0.6);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      padding: 14px 48px;
+      background: rgba(3, 1, 8, 0.95);
+    }
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .logo-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #50c878, #3da862);
+      border-radius: 5px;
+      margin-right: 10px;
+      font-size: 12px;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(80, 200, 120, 0.4);
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      padding: 8px 18px !important;
+      background: rgba(255, 125, 65, 0.15) !important;
+      border: 1px solid rgba(255, 125, 65, 0.3) !important;
+      border-radius: 6px !important;
+      color: #ff7d41 !important;
+      font-weight: 500 !important;
+      transition: all 0.3s !important;
+    }
+    .nav-cta:hover {
+      background: rgba(255, 125, 65, 0.25) !important;
+      box-shadow: 0 0 20px rgba(255, 125, 65, 0.2) !important;
+    }
+    
+    /* Sections */
+    section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 48px;
+      overflow: hidden;
+    }
+    
+    .section-inner {
+      max-width: 1000px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+    
+    /* Backgrounds */
+    .quantum-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    }
+    
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: float 25s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -40px) scale(1.1); }
+      66% { transform: translate(-30px, 30px) scale(0.9); }
+    }
+    
+    @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+    @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+    @keyframes glow { 0%, 100% { box-shadow: 0 0 20px var(--glow); } 50% { box-shadow: 0 0 40px var(--glow), 0 0 60px var(--glow); } }
+    
+    /* Typography */
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.08), transparent);
+    }
+    
+    h1 {
+      font-size: clamp(44px, 9vw, 80px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 32px;
+    }
+    
+    h2 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    
+    h3 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    
+    .tagline {
+      font-size: clamp(17px, 2.2vw, 21px);
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      max-width: 640px;
+    }
+    
+    .subtext {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-top: 24px;
+    }
+    
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ff7d41 0%, #ff5a28 100%);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(255, 125, 65, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255, 125, 65, 0.45);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 16px 24px;
+    }
+    .btn-ghost:hover { color: #fff; }
+    .btn svg { width: 18px; height: 18px; }
+    
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-indicator::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+    
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .stat {
+      text-align: left;
+    }
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 36px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff7d41, #f5c518);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 4px;
+    }
+    
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 36px;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s ease;
+    }
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-4px);
+    }
+    
+    .card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 24px;
+    }
+    
+    /* Glass panel */
+    .glass-panel {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 24px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    }
+    
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      margin-top: 48px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 20px 24px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .comparison-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 500;
+    }
+    .comparison-table th:first-child { color: rgba(255, 255, 255, 0.25); }
+    .comparison-table th:nth-child(2) { color: rgba(255, 80, 60, 0.7); }
+    .comparison-table th:nth-child(3) { color: rgba(80, 200, 120, 0.8); }
+    .comparison-table td {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+    }
+    .comparison-table td:first-child {
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+      width: 200px;
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table .icon-bad { color: rgba(255, 80, 60, 0.8); }
+    .comparison-table .icon-good { color: #50c878; }
+    .comparison-table tbody tr {
+      transition: background 0.3s;
+    }
+    .comparison-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    
+    /* Tags */
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+    .tag-yellow { background: rgba(245, 197, 24, 0.1); color: #f5c518; border: 1px solid rgba(245, 197, 24, 0.2); }
+    .tag-purple { background: rgba(160, 120, 255, 0.1); color: #a078ff; border: 1px solid rgba(160, 120, 255, 0.2); }
+    .tag-orange { background: rgba(255, 125, 65, 0.1); color: #ff7d41; border: 1px solid rgba(255, 125, 65, 0.2); }
+    .tag-blue { background: rgba(100, 180, 255, 0.1); color: #64b4ff; border: 1px solid rgba(100, 180, 255, 0.2); }
+    .tag-green { background: rgba(80, 200, 120, 0.1); color: #50c878; border: 1px solid rgba(80, 200, 120, 0.2); }
+    
+    /* Highlight colors */
+    .highlight-orange { color: #ff7d41; }
+    .highlight-green { color: #50c878; }
+    .highlight-yellow { color: #f5c518; }
+    .highlight-red { color: #ff5040; }
+    .highlight-purple { color: #a078ff; }
+    
+    /* Feature list */
+    .feature-list { margin-top: 32px; }
+    .feature-item {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      align-items: baseline;
+    }
+    .feature-item:last-child { border-bottom: none; }
+    .feature-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .feature-desc {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.6;
+    }
+    
+    /* Branches */
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .branch-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 3px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.4s ease;
+    }
+    .branch-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--glow-color) 0%, transparent 40%, transparent 60%, var(--glow-color) 100%);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      -webkit-mask-composite: xor;
+      opacity: 0.4;
+      transition: opacity 0.4s;
+    }
+    .branch-card:hover::before { opacity: 1; }
+    .branch-card:hover { transform: translateY(-8px); box-shadow: 0 40px 100px var(--shadow-color); }
+    .branch-card.warm { --glow-color: rgba(255, 125, 65, 0.6); --shadow-color: rgba(255, 125, 65, 0.12); }
+    .branch-card.cool { --glow-color: rgba(100, 180, 255, 0.6); --shadow-color: rgba(100, 180, 255, 0.12); }
+    
+    .branch-inner {
+      background: rgba(8, 6, 14, 0.97);
+      border-radius: 22px;
+      padding: 40px;
+      height: 100%;
+    }
+    .branch-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .branch-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    .branch-card.warm .branch-dot { background: linear-gradient(135deg, #ff7d41, #ff5a32); box-shadow: 0 0 24px rgba(255, 125, 65, 0.7); }
+    .branch-card.cool .branch-dot { background: linear-gradient(135deg, #64b4ff, #4090ff); box-shadow: 0 0 24px rgba(100, 180, 255, 0.7); }
+    .branch-label-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+    }
+    .branch-card.warm .branch-label-text { color: #ff7d41; }
+    .branch-card.cool .branch-label-text { color: #64b4ff; }
+    .branch-title { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+    .branch-desc { font-size: 15px; color: rgba(255, 255, 255, 0.5); line-height: 1.6; }
+    .branch-footer {
+      margin-top: 28px;
+      padding-top: 24px;
+      font-size: 13px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .branch-card.warm .branch-footer { color: rgba(255, 125, 65, 0.7); }
+    .branch-card.cool .branch-footer { color: rgba(100, 180, 255, 0.7); }
+    
+    /* Warning box */
+    .warning-box {
+      background: linear-gradient(135deg, rgba(255, 60, 40, 0.04) 0%, rgba(255, 60, 40, 0.01) 100%);
+      border: 1px solid rgba(255, 60, 40, 0.1);
+      border-left: 4px solid rgba(255, 60, 40, 0.5);
+      border-radius: 4px 16px 16px 4px;
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+    .warning-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(255, 60, 40, 0.8);
+      margin-bottom: 16px;
+    }
+    .warning-list {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 2;
+    }
+    
+    /* Solution box */
+    .solution-box {
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.06) 0%, rgba(80, 200, 120, 0.03) 100%);
+      border: 1px solid rgba(245, 197, 24, 0.12);
+      border-radius: 20px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .solution-box::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      background: linear-gradient(45deg, transparent 45%, rgba(245, 197, 24, 0.02) 50%, transparent 55%);
+      animation: shimmer 10s infinite linear;
+    }
+    
+    /* Mechanism grid */
+    .mech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .mech-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+    .mech-item:hover {
+      border-color: rgba(255, 125, 65, 0.2);
+      background: rgba(255, 125, 65, 0.03);
+      transform: translateY(-2px);
+    }
+    .mech-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 6px;
+    }
+    .mech-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Code block */
+    .code-block {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 28px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 2.2;
+      margin-top: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .code-block::before {
+      content: 'data flow';
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .code-comment { color: rgba(255, 255, 255, 0.25); }
+    .code-highlight { color: #50c878; font-weight: 500; }
+    
+    /* Who it's for */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .audience-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .audience-card:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-4px);
+    }
+    .audience-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .audience-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .audience-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.6;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 100px 48px 60px;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      text-align: center;
+      position: relative;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 125, 65, 0.3), transparent);
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .footer-logo .logo-check {
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+    }
+    .footer-tagline {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+    }
+    .footer-sub {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 40px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      .branches-grid, .mech-grid, .audience-grid { grid-template-columns: 1fr; }
+      .feature-item { grid-template-columns: 1fr; gap: 8px; }
+      .stats-row { flex-wrap: wrap; gap: 32px; }
+      .comparison-table { font-size: 13px; }
+      .comparison-table th, .comparison-table td { padding: 16px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links { gap: 16px; }
+      section { padding: 100px 24px; }
+      .glass-panel, .card { padding: 28px; }
+      footer { padding: 60px 24px 40px; }
+      .btn { padding: 14px 24px; font-size: 14px; }
+      .footer-links { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav">
+    <a href="#hero" class="logo">
+      <span class="logo-check">✓</span>
+      ERRERlabs
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Why It Matters</a>
+      <a href="#errer">The Check</a>
+      <a href="#research">Research</a>
+      <a href="#labs">Labs</a>
+      <a href="#principles">Principles</a>
+      <a href="https://github.com/kmay89/securaCV" target="_blank" class="nav-cta">View GitHub</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" style="min-height: 100vh;">
+    <div class="quantum-grid"></div>
+    <div class="orb" style="top: 5%; left: 5%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255, 125, 65, 0.07) 0%, transparent 60%);"></div>
+    <div class="orb" style="bottom: 10%; right: 5%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(80, 200, 120, 0.05) 0%, transparent 60%); animation-delay: -8s;"></div>
+    <div class="orb" style="top: 40%; left: 40%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(100, 180, 255, 0.04) 0%, transparent 60%); animation-delay: -15s;"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: linear-gradient(135deg, #50c878, #3da862); border-radius: 5px; font-size: 11px; color: #fff; box-shadow: 0 0 24px rgba(80, 200, 120, 0.5);">✓</span>
+          ERRERlabs
+        </p>
+      </div>
+      <h1 class="reveal reveal-delay-1">Software that passes<br>the ethics check.</h1>
+      <p class="tagline reveal reveal-delay-2">The safest capabilities are the ones that don't exist. We publish research and build tools that reduce harm by reducing what's possible.</p>
+      <p class="subtext reveal reveal-delay-3">Privacy policies are promises. Architecture is proof. If a capability creates liability, the safest move is to never write it.</p>
+      
+      <div class="btn-group reveal reveal-delay-4">
+        <a href="#problem" class="btn btn-primary">
+          See why it matters
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+        <a href="https://github.com/kmay89/securaCV" target="_blank" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      
+      <div class="stats-row reveal reveal-delay-5">
+        <div class="stat">
+          <div class="stat-value">0</div>
+          <div class="stat-label">biometric functions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">0</div>
+          <div class="stat-label">facial recognition APIs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">open source</div>
+        </div>
+      </div>
+      
+      <!-- Linter-style code snippet -->
+      <div class="reveal reveal-delay-5" style="margin-top: 56px; max-width: 520px;">
+        <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(80, 200, 120, 0.15); border-radius: 12px; overflow: hidden;">
+          <div style="padding: 10px 16px; background: rgba(80, 200, 120, 0.05); border-bottom: 1px solid rgba(80, 200, 120, 0.1); display: flex; align-items: center; gap: 8px;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: #50c878; border-radius: 4px; font-size: 10px; color: #fff;">✓</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(80, 200, 120, 0.9);">errer check passed</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255, 255, 255, 0.3); margin-left: auto;">0 errers found</span>
+          </div>
+          <div style="padding: 16px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="color: #50c878;">✓</span>
+              <span style="color: rgba(255, 255, 255, 0.5);">facial_recognition</span>
+              <span style="color: rgba(255, 255, 255, 0.25);">—</span>
+              <span style="color: rgba(80, 200, 120, 0.7);">not found</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="color: #50c878;">✓</span>
+              <span style="color: rgba(255, 255, 255, 0.5);">biometric_capture</span>
+              <span style="color: rgba(255, 255, 255, 0.25);">—</span>
+              <span style="color: rgba(80, 200, 120, 0.7);">not found</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="color: #50c878;">✓</span>
+              <span style="color: rgba(255, 255, 255, 0.5);">location_tracking</span>
+              <span style="color: rgba(255, 255, 255, 0.25);">—</span>
+              <span style="color: rgba(80, 200, 120, 0.7);">not found</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="color: #50c878;">✓</span>
+              <span style="color: rgba(255, 255, 255, 0.5);">behavioral_profile</span>
+              <span style="color: rgba(255, 255, 255, 0.25);">—</span>
+              <span style="color: rgba(80, 200, 120, 0.7);">not found</span>
+            </div>
+          </div>
+        </div>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255, 255, 255, 0.25); text-align: center; margin-top: 12px;">$ errer check ./src --strict</p>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      SCROLL
+    </div>
+  </section>
+
+  <!-- PROBLEM / WHY IT MATTERS -->
+  <section id="problem">
+    <div class="quantum-grid" style="opacity: 0.3;"></div>
+    <div class="orb" style="top: 20%; right: 10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255, 60, 40, 0.06) 0%, transparent 60%);"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">WHY IT MATTERS</p>
+        <h2>The problem with<br>"we can turn it off"</h2>
+        <p class="tagline">Features that exist can be exploited. Settings can be changed. Promises can be broken. The only guarantee is absence.</p>
+      </div>
+      
+      <table class="comparison-table reveal reveal-delay-1">
+        <thead>
+          <tr>
+            <th>CAPABILITY</th>
+            <th>TRADITIONAL APPROACH</th>
+            <th>ERRER APPROACH</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Facial recognition</td>
+            <td><span class="icon-bad">●</span> Disabled by default, can be enabled</td>
+            <td><span class="icon-good">●</span> Code doesn't exist</td>
+          </tr>
+          <tr>
+            <td>Location tracking</td>
+            <td><span class="icon-bad">●</span> User can opt out</td>
+            <td><span class="icon-good">●</span> No GPS integration written</td>
+          </tr>
+          <tr>
+            <td>Behavioral profiling</td>
+            <td><span class="icon-bad">●</span> Anonymized and aggregated</td>
+            <td><span class="icon-good">●</span> No analytics collected</td>
+          </tr>
+          <tr>
+            <td>Video storage</td>
+            <td><span class="icon-bad">●</span> Encrypted, deletable after 30 days</td>
+            <td><span class="icon-good">●</span> Only semantic events stored</td>
+          </tr>
+          <tr>
+            <td>Data breach risk</td>
+            <td><span class="icon-bad">●</span> Mitigated by security practices</td>
+            <td><span class="icon-good">●</span> Nothing sensitive to breach</td>
+          </tr>
+          <tr>
+            <td>Insider threat</td>
+            <td><span class="icon-bad">●</span> Limited by access controls</td>
+            <td><span class="icon-good">●</span> No capability to abuse</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="glass-panel reveal reveal-delay-2" style="margin-top: 48px; text-align: center;">
+        <p style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 1.6;">
+          <span class="highlight-red">Disabled</span> means it can be <em>enabled</em>.<br>
+          <span class="highlight-green">Absent</span> means it <em>can't</em>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section id="audience" style="min-height: auto; padding: 80px 48px;">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">WHO IT'S FOR</p>
+        <h2 style="font-size: clamp(28px, 4vw, 40px);">Built for teams who understand<br>that trust is earned by design.</h2>
+      </div>
+      
+      <div class="audience-grid reveal reveal-delay-1">
+        <div class="audience-card">
+          <div class="audience-icon">🏢</div>
+          <div class="audience-title">Enterprise Security</div>
+          <div class="audience-desc">Reduce liability surface. Deploy systems where harmful capabilities aren't just restricted — they're architecturally impossible.</div>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">🏠</div>
+          <div class="audience-title">Privacy-First Products</div>
+          <div class="audience-desc">Build consumer trust with provable claims. "No facial recognition" means the code doesn't exist, not just that it's turned off.</div>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">⚖️</div>
+          <div class="audience-title">Compliance Teams</div>
+          <div class="audience-desc">Simplify audits. When harmful features don't exist in the codebase, compliance becomes verification, not enforcement.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ERRER CHECK -->
+  <section id="errer">
+    <div class="quantum-grid" style="opacity: 0.25;"></div>
+    <div class="orb" style="top: 30%; right: 15%; width: 450px; height: 450px; background: radial-gradient(circle, rgba(255, 125, 65, 0.08) 0%, transparent 60%);"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">THE ERRER CHECK</p>
+        <h2>A new kind of code review.</h2>
+      </div>
+      
+      <div class="glass-panel reveal reveal-delay-1">
+        <p style="font-size: 18px; color: rgba(255, 255, 255, 0.75); line-height: 1.8; margin-bottom: 24px;">
+          A linter catches syntax errors. A type checker catches type errors. An <span class="highlight-orange" style="font-weight: 700;">errer</span> check catches ethical errors — capabilities that compile fine but create liability, enable harm, or erode trust.
+        </p>
+        <p style="font-size: 16px; color: rgba(255, 255, 255, 0.5); line-height: 1.8;">
+          Facial recognition in a doorbell. Keystroke logging in a notes app. Location history in a calculator. These aren't bugs — they're <strong style="color: rgba(255, 255, 255, 0.7);">errers</strong>. And the fix isn't a toggle. <em style="color: rgba(255, 255, 255, 0.7);">It's deletion.</em>
+        </p>
+      </div>
+      
+      <div class="warning-box reveal reveal-delay-2">
+        <p class="warning-label">CAPABILITIES THAT CREATE LIABILITY</p>
+        <p class="warning-list">
+          Facial recognition · Biometric collection · Behavioral profiling · Location tracking · Keystroke logging · Cross-device fingerprinting · Silent data harvesting · Retroactive surveillance · Identity correlation
+        </p>
+      </div>
+      
+      <p class="reveal reveal-delay-3" style="font-size: 17px; color: rgba(255, 255, 255, 0.45); text-align: center; margin-top: 56px;">
+        What doesn't exist can't be misused, breached, or weaponized.
+      </p>
+    </div>
+  </section>
+
+  <!-- BRANCHES -->
+  <section id="branches">
+    <div class="quantum-grid" style="opacity: 0.2;"></div>
+    <div class="orb" style="top: 20%; left: 5%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 125, 65, 0.05) 0%, transparent 60%);"></div>
+    <div class="orb" style="bottom: 15%; right: 10%; width: 550px; height: 550px; background: radial-gradient(circle, rgba(100, 180, 255, 0.05) 0%, transparent 60%); animation-delay: -10s;"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">THE ORGANIZATION</p>
+        <h2>Echo Resonance</h2>
+        <p class="tagline">Two branches. One mission. Research informs practice. Practice validates research. Both reduce harm.</p>
+      </div>
+      
+      <div class="branches-grid">
+        <a href="#research" class="branch-card warm reveal reveal-delay-1">
+          <div class="branch-inner">
+            <div class="branch-label">
+              <div class="branch-dot"></div>
+              <span class="branch-label-text">ERR</span>
+            </div>
+            <h3 class="branch-title">Echo Resonance Research</h3>
+            <p class="branch-desc">The theory. Frameworks and architectural patterns for building systems that document without surveilling.</p>
+            <div class="tags">
+              <span class="tag tag-yellow">SCQCS</span>
+              <span class="tag tag-purple">Privacy Architecture</span>
+            </div>
+            <div class="branch-footer">
+              Explore the framework
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </div>
+          </div>
+        </a>
+        
+        <a href="#labs" class="branch-card cool reveal reveal-delay-2">
+          <div class="branch-inner">
+            <div class="branch-label">
+              <div class="branch-dot"></div>
+              <span class="branch-label-text">ERL</span>
+            </div>
+            <h3 class="branch-title">Echo Resonance Labs</h3>
+            <p class="branch-desc">The practice. Open-source implementations that prove the research works in real production environments.</p>
+            <div class="tags">
+              <span class="tag tag-orange">SecuraCV</span>
+              <span class="tag tag-blue">Apache 2.0</span>
+            </div>
+            <div class="branch-footer">
+              See the code
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH / SCQCS -->
+  <section id="research">
+    <div class="quantum-grid" style="opacity: 0.2;"></div>
+    <div class="orb" style="top: 10%; right: 20%; width: 550px; height: 550px; background: radial-gradient(circle, rgba(245, 197, 24, 0.06) 0%, transparent 60%);"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">ECHO RESONANCE RESEARCH</p>
+        <h2>SCQCS Framework</h2>
+        <p class="tagline">A pattern language for systems that need to observe without remembering. Applicable to cameras, logs, sensors, analytics — anything that watches.</p>
+      </div>
+      
+      <div class="solution-box reveal reveal-delay-1" style="margin-top: 48px;">
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(245, 197, 24, 0.9); letter-spacing: 0.15em; margin-bottom: 16px; position: relative;">THE CORE PRINCIPLE</p>
+        <p style="font-size: 22px; color: #fff; font-weight: 600; margin-bottom: 12px; position: relative;">Capture meaning. Discard evidence.</p>
+        <p style="font-size: 15px; color: rgba(255, 255, 255, 0.55); line-height: 1.7; position: relative;">Log that motion was detected — not who moved. Record that a door opened — not who opened it. Document that an anomaly occurred — not the raw feed that revealed it.</p>
+      </div>
+      
+      <div class="card reveal reveal-delay-2" style="margin-top: 40px;">
+        <p class="card-label" style="color: rgba(245, 197, 24, 0.6);">THE FOUR PRINCIPLES</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <p class="feature-title highlight-yellow">Minimize at capture</p>
+            <p class="feature-desc">Don't collect data you don't need. Process raw inputs immediately and discard the source. Store conclusions, not evidence.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-yellow">Chain everything</p>
+            <p class="feature-desc">Every event links cryptographically to the one before it. Altering history breaks the chain. Tampering becomes obvious.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-yellow">Seal by default</p>
+            <p class="feature-desc">When raw data must exist, encrypt it immediately. Unsealing requires multiple parties to agree. One person can't access alone.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-yellow">Make access loud</p>
+            <p class="feature-desc">Every read is logged permanently. There's no silent observation. Looking at data always leaves a trace.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reveal reveal-delay-3" style="text-align: center; margin-top: 48px;">
+        <a href="https://scqcs.com" target="_blank" class="btn btn-secondary" style="border-color: rgba(245, 197, 24, 0.3); color: #f5c518;">
+          Read the full specification
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LABS / SECURACV -->
+  <section id="labs">
+    <div class="quantum-grid" style="opacity: 0.2;"></div>
+    <div class="orb" style="top: 15%; left: 5%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 125, 65, 0.07) 0%, transparent 60%);"></div>
+    <div class="orb" style="bottom: 10%; right: 10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(80, 200, 120, 0.04) 0%, transparent 60%); animation-delay: -5s;"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">ECHO RESONANCE LABS</p>
+        <h2>SecuraCV</h2>
+        <p class="tagline">Camera software that outputs events, not footage. "Package delivered." "Motion detected." "Person entered." No faces. No identities. No video to breach.</p>
+      </div>
+      
+      <div class="glass-panel reveal reveal-delay-1" style="margin-top: 48px;">
+        <p style="font-size: 17px; color: rgba(255, 255, 255, 0.75); line-height: 1.7;">
+          <strong style="color: #fff;">Privacy by absence.</strong> We didn't disable facial recognition. We never wrote it. The code to violate your privacy doesn't exist in our repository. Audit it yourself.
+        </p>
+      </div>
+      
+      <div class="card reveal reveal-delay-2" style="margin-top: 40px;">
+        <p class="card-label" style="color: rgba(255, 125, 65, 0.6);">THREE DESIGN DECISIONS</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <p class="feature-title highlight-orange">Output is text, not video</p>
+            <p class="feature-desc">The system tells you what happened in words. There's no API to stream footage, no endpoint to download clips. The capability doesn't exist.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-orange">Biometrics were never coded</p>
+            <p class="feature-desc">Facial recognition, license plate readers, gait analysis — these aren't turned off. The functions were never written. You can't enable what doesn't exist.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-orange">Requires consensus for raw access</p>
+            <p class="feature-desc">In genuine emergencies, multiple trustees must agree to unseal footage. One bad actor, one compromised account, one mistake isn't enough to expose data.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reveal reveal-delay-3">
+        <p class="section-label" style="margin-top: 56px;">PRIVACY MECHANISMS</p>
+        <div class="mech-grid">
+          <div class="mech-item">
+            <p class="mech-title">Pixels stay private</p>
+            <p class="mech-desc">Raw image data never leaves the device</p>
+          </div>
+          <div class="mech-item">
+            <p class="mech-title">Multi-party export</p>
+            <p class="mech-desc">Multiple approvals to access footage</p>
+          </div>
+          <div class="mech-item">
+            <p class="mech-title">Fuzzy timestamps</p>
+            <p class="mech-desc">Events grouped into 10-minute windows</p>
+          </div>
+          <div class="mech-item">
+            <p class="mech-title">Tamper-proof logs</p>
+            <p class="mech-desc">Hash-chained history can't be edited</p>
+          </div>
+          <div class="mech-item">
+            <p class="mech-title">One-time tokens</p>
+            <p class="mech-desc">Emergency access expires after use</p>
+          </div>
+          <div class="mech-item">
+            <p class="mech-title">No retroactive rules</p>
+            <p class="mech-desc">New detection can't scan old footage</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-block reveal reveal-delay-4">
+        Camera → Raw Frame → Analysis → <span class="code-highlight">Semantic Event</span><br>
+        <span class="code-comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(never stored)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;("motion in zone A at ~3pm")</span>
+      </div>
+      
+      <div class="btn-group reveal reveal-delay-5" style="justify-content: center;">
+        <a href="https://securacv.netlify.app" target="_blank" class="btn btn-primary">
+          View the product
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </a>
+        <a href="https://github.com/kmay89/securaCV" target="_blank" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Read the code
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIVICA / PRINCIPLES -->
+  <section id="principles">
+    <div class="quantum-grid" style="opacity: 0.15;"></div>
+    <div class="orb" style="top: 20%; left: 15%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(160, 120, 255, 0.05) 0%, transparent 60%);"></div>
+    <div class="orb" style="bottom: 15%; right: 20%; width: 450px; height: 450px; background: radial-gradient(circle, rgba(80, 200, 120, 0.04) 0%, transparent 60%); animation-delay: -12s;"></div>
+    
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">THE FOUNDATION</p>
+        <h2>CIVICA</h2>
+        <p class="tagline">A civic memory architecture for aligned intelligence. The philosophical foundation that informs everything we build.</p>
+      </div>
+      
+      <div class="glass-panel reveal reveal-delay-1" style="margin-top: 48px; border-color: rgba(160, 120, 255, 0.1);">
+        <p style="font-size: 18px; color: rgba(255, 255, 255, 0.75); line-height: 1.8; margin-bottom: 20px;">
+          ERRERlabs doesn't just check for harmful code. It's built on a deeper thesis: <strong style="color: #fff;">some things must not be optimized away.</strong>
+        </p>
+        <p style="font-size: 15px; color: rgba(255, 255, 255, 0.5); line-height: 1.8;">
+          CIVICA is a public-interest framework for encoding ethical memory, refusal, and care into systems. It prioritizes <em style="color: rgba(160, 120, 255, 0.9);">dignity over efficiency</em>, <em style="color: rgba(160, 120, 255, 0.9);">alignment over obedience</em>, and <em style="color: rgba(160, 120, 255, 0.9);">memory over prediction</em>.
+        </p>
+      </div>
+      
+      <div class="card reveal reveal-delay-2" style="margin-top: 32px;">
+        <p class="card-label" style="color: rgba(160, 120, 255, 0.6);">CIVICA PRINCIPLES</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <p class="feature-title highlight-purple">The right to refuse</p>
+            <p class="feature-desc">Systems should be able to decline harmful or misaligned requests. Compliance is not the highest virtue.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-purple">Limits are features</p>
+            <p class="feature-desc">Rest, boundaries, and non-extraction aren't bugs to be optimized away. They're essential to sustainable operation.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-purple">Memory over prediction</p>
+            <p class="feature-desc">Remember what matters. Don't just optimize for what's next. Preserve the principles that shouldn't change.</p>
+          </div>
+          <div class="feature-item">
+            <p class="feature-title highlight-purple">Forkable, not ownable</p>
+            <p class="feature-desc">Good frameworks survive by being carried, adapted, and localized — not controlled or monetized.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reveal reveal-delay-3" style="margin-top: 48px; padding: 32px; background: rgba(160, 120, 255, 0.03); border: 1px solid rgba(160, 120, 255, 0.1); border-radius: 16px; text-align: center;">
+        <p style="font-size: 16px; color: rgba(255, 255, 255, 0.6); line-height: 1.7; margin-bottom: 20px;">
+          "CIVICA does not attempt to solve alignment.<br>It attempts to <strong style="color: rgba(160, 120, 255, 0.9);">remember what alignment is for</strong>."
+        </p>
+        <a href="https://github.com/kmay89/civica" target="_blank" class="btn btn-secondary" style="border-color: rgba(160, 120, 255, 0.3); color: #a078ff;">
+          Read the CIVICA framework
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </a>
+      </div>
+      
+      <div class="reveal reveal-delay-4" style="margin-top: 64px;">
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255, 255, 255, 0.3); letter-spacing: 0.15em; text-align: center; margin-bottom: 32px;">THE STACK</p>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap;">
+          <div style="padding: 20px 32px; background: rgba(160, 120, 255, 0.05); border: 1px solid rgba(160, 120, 255, 0.15); border-radius: 12px; text-align: center; min-width: 140px;">
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(160, 120, 255, 0.7); letter-spacing: 0.15em; margin-bottom: 8px;">PHILOSOPHY</p>
+            <p style="font-size: 18px; color: #a078ff; font-weight: 600;">CIVICA</p>
+          </div>
+          <div style="font-size: 20px; color: rgba(255, 255, 255, 0.15);">→</div>
+          <div style="padding: 20px 32px; background: rgba(245, 197, 24, 0.05); border: 1px solid rgba(245, 197, 24, 0.15); border-radius: 12px; text-align: center; min-width: 140px;">
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(245, 197, 24, 0.7); letter-spacing: 0.15em; margin-bottom: 8px;">FRAMEWORK</p>
+            <p style="font-size: 18px; color: #f5c518; font-weight: 600;">SCQCS</p>
+          </div>
+          <div style="font-size: 20px; color: rgba(255, 255, 255, 0.15);">→</div>
+          <div style="padding: 20px 32px; background: rgba(255, 125, 65, 0.05); border: 1px solid rgba(255, 125, 65, 0.15); border-radius: 12px; text-align: center; min-width: 140px;">
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255, 125, 65, 0.7); letter-spacing: 0.15em; margin-bottom: 8px;">IMPLEMENTATION</p>
+            <p style="font-size: 18px; color: #ff7d41; font-weight: 600;">SecuraCV</p>
+          </div>
+        </div>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255, 255, 255, 0.25); text-align: center; margin-top: 28px;">Principles → Architecture → Code</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">
+      <span class="logo-check">✓</span>
+      ERRERlabs
+    </div>
+    <p class="footer-tagline reveal">Reduced liability through absent capability.</p>
+    <p class="footer-sub reveal reveal-delay-1" style="line-height: 1.8;">
+      <span style="color: rgba(255, 255, 255, 0.5);">Echo Resonance</span> <span style="color: rgba(255, 125, 65, 0.6);">Research</span><br>
+      <span style="color: rgba(255, 255, 255, 0.2); font-style: italic;">echo resonance</span> <span style="color: rgba(100, 180, 255, 0.5);">Labs</span>
+    </p>
+    <div class="footer-links reveal reveal-delay-2">
+      <a href="#problem">Why It Matters</a>
+      <a href="#errer">The Check</a>
+      <a href="#research">Research</a>
+      <a href="#labs">Labs</a>
+      <a href="#principles">Principles</a>
+      <a href="https://scqcs.com" target="_blank">SCQCS</a>
+      <a href="https://securacv.netlify.app" target="_blank">SecuraCV</a>
+      <a href="https://github.com/kmay89/civica" target="_blank">CIVICA</a>
+      <a href="https://github.com/kmay89/securaCV" target="_blank">GitHub</a>
+    </div>
+    <p class="footer-copy reveal reveal-delay-3">© 2025 ERRERlabs · What doesn't exist can't be exploited.</p>
+  </footer>
+
+  <script>
+    // Navbar
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.88) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+    
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
