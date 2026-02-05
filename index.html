@@ -461,10 +461,11 @@
       50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* Typewriter text animation */
+    /* Typewriter text animation - GPU optimized */
     .rotating-text-container {
-      display: inline-block;
+      display: inline;
       position: relative;
+      contain: layout style;
     }
     .rotating-word {
       display: inline;
@@ -475,22 +476,22 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: gradientShift 8s ease-in-out infinite;
+      will-change: contents;
     }
     .typewriter-cursor {
       display: inline-block;
       width: 3px;
-      height: 0.9em;
+      height: 0.85em;
       background: linear-gradient(135deg, #ff7d41, #f5c518);
-      margin-left: 2px;
-      vertical-align: baseline;
-      position: relative;
-      top: 0.1em;
-      animation: cursorBlink 0.8s ease-in-out infinite;
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      border-radius: 1px;
+      animation: cursorBlink 1s steps(1) infinite;
+      will-change: opacity;
     }
     @keyframes cursorBlink {
-      0%, 45% { opacity: 1; }
-      50%, 95% { opacity: 0; }
-      100% { opacity: 1; }
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
     }
     @keyframes gradientShift {
       0%, 100% { background-position: 0% 50%; }
