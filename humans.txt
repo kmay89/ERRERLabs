@@ -1,0 +1,39 @@
+/* TEAM */
+Organization: ERRERlabs (Echo Resonance Labs)
+Site: https://github.com/kmay89
+Location: Earth
+
+/* THANKS */
+Name: The security and privacy research community
+Name: SCQCS framework contributors
+Name: Open-source advocates everywhere
+
+/* SITE */
+Language: English
+Doctype: HTML5
+Standards: HTML5, CSS3, ES6+, Schema.org, security.txt
+Software: Static site, no server-side processing
+
+/* SECURITY APPROACH */
+- Minimal data collection (none)
+- No cookies, no analytics, no tracking
+- Static content only - minimal attack surface
+- Security headers configured
+- Content Security Policy enforced
+- All resources served over HTTPS
+- Permissions-Policy restricts dangerous APIs
+
+/* PRIVACY PHILOSOPHY */
+- Privacy policies are promises; architecture is proof
+- The safest capabilities are the ones that don't exist
+- Disabled means it can be enabled; absent means it can't
+- What doesn't exist can't be exploited
+
+/* RELATED PROJECTS */
+- SCQCS: https://scqcs.com
+- SecuraCV: https://securacv.netlify.app
+- CIVICA: https://github.com/kmay89/civica
+
+/* LICENSE */
+Patterns described may be implemented freely.
+Attribution appreciated but not required.
