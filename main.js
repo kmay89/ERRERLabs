@@ -135,17 +135,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       if (isDeleting) {
         charIndex--;
         el.textContent = current.substring(0, charIndex);
-        delay = 50;
+        delay = 80; // Slower backspace for smoother feel
 
         if (charIndex === 0) {
           isDeleting = false;
           wordIndex = (wordIndex + 1) % words.length;
-          delay = 200;
+          delay = 300;
         }
       } else {
         charIndex++;
         el.textContent = words[wordIndex].substring(0, charIndex);
-        delay = 80;
+        delay = 120; // Slower typing for buttery smoothness
 
         if (charIndex === words[wordIndex].length) {
           isDeleting = true;
