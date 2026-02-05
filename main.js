@@ -121,30 +121,33 @@ window.addEventListener('load', function() {
   if (!el) return;
 
   var wordIndex = 0;
-  var charIndex = el.textContent.length;
-  var isDeleting = false;
+  var charIndex = words[0].length;
+  var isDeleting = true; // Start by deleting the first word
   var timeout;
 
   function type() {
     var current = words[wordIndex];
+    var delay;
 
     if (isDeleting) {
       charIndex--;
       el.textContent = current.substring(0, charIndex);
+      delay = 50;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        delay = 200;
+      }
     } else {
       charIndex++;
-      el.textContent = current.substring(0, charIndex);
-    }
+      el.textContent = words[wordIndex].substring(0, charIndex);
+      delay = 80;
 
-    var delay = isDeleting ? 50 : 80;
-
-    if (!isDeleting && charIndex === current.length) {
-      delay = 2500;
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      delay = 200;
+      if (charIndex === words[wordIndex].length) {
+        isDeleting = true;
+        delay = 2500;
+      }
     }
 
     timeout = setTimeout(type, delay);
@@ -159,6 +162,6 @@ window.addEventListener('load', function() {
     }
   });
 
-  // Start after 2.5s
+  // Start deleting after 2.5s pause
   timeout = setTimeout(type, 2500);
 });
