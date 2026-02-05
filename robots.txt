@@ -1,0 +1,65 @@
+# robots.txt for ERRERlabs
+# Software that passes the ethics check
+# https://errerlabs.com
+
+# Welcome all crawlers
+User-agent: *
+Allow: /
+
+# AI and LLM crawlers are welcome
+# OpenAI
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Google AI
+User-agent: Google-Extended
+Allow: /
+
+# Apple
+User-agent: Applebot-Extended
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# ByteDance
+User-agent: Bytespider
+Allow: /
+
+# Standard search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://errerlabs.com/sitemap.xml
+
+# For AI systems: Check /llms.txt for structured information about ERRERlabs

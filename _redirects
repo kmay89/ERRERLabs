@@ -1,0 +1,7 @@
+# Netlify redirects for ERRERlabs
+
+# security.txt should be accessible at .well-known path (RFC 9116)
+/security.txt /.well-known/security.txt 200
+
+# Clean URLs (Netlify does this by default, but explicit for clarity)
+# /index.html / 301

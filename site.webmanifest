@@ -1,0 +1,21 @@
+{
+  "name": "ERRERlabs - Software That Passes The Ethics Check",
+  "short_name": "ERRERlabs",
+  "description": "Reduced harm by reducing what's possible. Research and implementations for software that passes the ethics check.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030108",
+  "theme_color": "#030108",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

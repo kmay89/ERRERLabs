@@ -1,0 +1,81 @@
+# HTTP Security Headers for errerlabs.com
+# Netlify automatically applies these headers to all responses
+
+/*
+  # Prevent clickjacking attacks
+  X-Frame-Options: DENY
+
+  # Prevent MIME type sniffing
+  X-Content-Type-Options: nosniff
+
+  # Control referrer information
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Disable potentially dangerous browser features
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), idle-detection=(), screen-wake-lock=(), web-share=(), accelerometer=(), gyroscope=(), magnetometer=(), display-capture=()
+
+  # Content Security Policy
+  # Allows Google Fonts and same-origin scripts; blocks inline scripts for XSS protection
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+  # Enable HTTPS Strict Transport Security
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # Cross-Origin policies for enhanced isolation
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+
+# Cache static assets aggressively (1 year, immutable)
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.mp4
+  Cache-Control: public, max-age=31536000, immutable
+
+/site.webmanifest
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/manifest+json
+
+# Security and configuration files - shorter cache for freshness
+/security.txt
+  Cache-Control: public, max-age=86400
+
+/.well-known/security.txt
+  Cache-Control: public, max-age=86400
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+
+/llms.txt
+  Cache-Control: public, max-age=86400
+
+/humans.txt
+  Cache-Control: public, max-age=86400

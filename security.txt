@@ -1,0 +1,28 @@
+# Security Policy for ERRERlabs
+# Canonical location: https://errerlabs.com/.well-known/security.txt
+# See RFC 9116: https://www.rfc-editor.org/rfc/rfc9116
+
+# Contact for security researchers
+Contact: https://github.com/kmay89/ERRERLabs/security/advisories/new
+Contact: https://github.com/kmay89
+
+# Expiration date (update annually)
+Expires: 2027-02-05T00:00:00.000Z
+
+# Preferred languages
+Preferred-Languages: en
+
+# Encryption (optional - add PGP key URL if available)
+# Encryption: https://errerlabs.com/.well-known/pgp-key.txt
+
+# Acknowledgments page (optional)
+# Acknowledgments: https://errerlabs.com/security-acknowledgments
+
+# Hiring (optional)
+# Hiring: https://errerlabs.com/careers
+
+# Policy
+Policy: https://github.com/kmay89/ERRERLabs/security/policy
+
+# Canonical
+Canonical: https://errerlabs.com/.well-known/security.txt
