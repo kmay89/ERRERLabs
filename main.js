@@ -2,6 +2,8 @@
 const nav = document.getElementById('nav');
 const scrollProgress = document.getElementById('scroll-progress');
 const revealElements = document.querySelectorAll('.reveal');
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
 
 let ticking = false;
 let lastScrollY = 0;
@@ -53,7 +55,27 @@ window.addEventListener('resize', () => {
 // Initial call on load
 window.addEventListener('load', updateScroll);
 
-// Smooth scroll for anchor links
+// Hamburger menu toggle
+hamburger.addEventListener('click', () => {
+  const isActive = hamburger.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  hamburger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+
+  // Prevent body scroll when menu is open
+  document.body.style.overflow = isActive ? 'hidden' : '';
+});
+
+// Close mobile menu when a link is clicked
+document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  });
+});
+
+// Smooth scroll for anchor links (both desktop and mobile)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
