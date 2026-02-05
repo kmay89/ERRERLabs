@@ -113,3 +113,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Rotating text animation for hero
+(function() {
+  const words = ['Architecture', 'Hardware', 'Firmware', 'Software'];
+  const rotatingWord = document.getElementById('rotating-word');
+  if (!rotatingWord) return;
+
+  let currentIndex = 0;
+  const interval = 2500; // Time between word changes
+
+  function rotateWord() {
+    const currentSpan = rotatingWord.querySelector('.word');
+    if (currentSpan) {
+      currentSpan.classList.add('exit');
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % words.length;
+        rotatingWord.innerHTML = `<span class="word">${words[currentIndex]}</span>`;
+      }, 400); // Match exit animation duration
+    }
+  }
+
+  // Start rotation after initial delay
+  setTimeout(() => {
+    setInterval(rotateWord, interval);
+  }, 2000);
+})();
