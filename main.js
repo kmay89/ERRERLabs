@@ -7,7 +7,7 @@ const mobileNav = document.getElementById('mobile-nav');
 
 let ticking = false;
 let lastScrollY = 0;
-let cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+let cachedScrollHeight = 0;
 let resizeTimeout;
 
 function updateScroll() {
@@ -58,8 +58,11 @@ window.addEventListener('resize', () => {
   }, 150);
 }, { passive: true });
 
-// Initial call on load
-window.addEventListener('load', updateScroll);
+// Initial call on load - calculate scroll height when page is fully loaded
+window.addEventListener('load', () => {
+  cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  updateScroll();
+});
 
 // Close mobile nav helper function
 function closeMobileNav() {
