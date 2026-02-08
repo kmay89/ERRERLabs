@@ -31,7 +31,7 @@ Software: Static site, no server-side processing
 
 /* RELATED PROJECTS */
 - SCQCS: https://scqcs.com
-- SecuraCV: https://securacv.netlify.app
+- SecuraCV: https://securacv.com
 - CIVICA: https://github.com/kmay89/civica
 
 /* LICENSE */
