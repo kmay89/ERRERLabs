@@ -69,7 +69,7 @@ Principles → Architecture → Code
 ## Related Links
 
 - SCQCS Framework: https://scqcs.com
-- SecuraCV Product: https://securacv.netlify.app
+- SecuraCV Product: https://securacv.com
 - CIVICA Framework: https://github.com/kmay89/civica
 - GitHub: https://github.com/kmay89/securaCV
 
